@@ -1,0 +1,22 @@
+spring:
+    datasource:
+        driver-class-name: com.mysql.cj.jdbc.Driver
+        username: ${MYSQL_USER:xmluser}
+        url: jdbc:mysql://${MYSQL_HOST:localhost}:${MYSQL_PORT:3306}/iapps
+        password: ${MYSQL_PASSWORD:xml2210}
+    jpa:
+        properties:
+            hibernate:
+                dialect: org.hibernate.dialect.MySQL8Dialect
+                ddl-auto: none
+    http:
+        multipart:
+            max-request-size: 10MB
+            max-file-size: 10MB
+    liquibase:
+        enabled: true
+        change-log: classpath:changelog/db.changelog.yaml
+        default-schema: iapps
+    logging:
+        level:
+            liquibase: DEBUG
