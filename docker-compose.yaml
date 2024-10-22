@@ -1,0 +1,30 @@
+version: '3.7'
+services:
+  xml-processor:
+    image: xml-processor:1.0
+    restart: always
+    build:
+      context: .
+    ports:
+      - 8080:8080
+    networks:
+      - tatva-network
+    depends_on:
+      - xml-db
+    environment:
+      MYSQL_HOST: xml-db
+      MYSQL_USER: xmluser
+      MYSQL_PASSWORD: xml2210
+      MYSQL_PORT: 3306
+
+  xml-db:
+    container_name: xml-db
+    networks:
+      - tatva-network
+    build:
+      context: ./mysql
+    ports:
+      - "3306:3306"
+
+networks:
+  tatva-network:

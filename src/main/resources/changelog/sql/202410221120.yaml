@@ -1,0 +1,38 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1
+      author: Ravi
+      preConditions:
+        onFail: MARK_RAN
+        not:
+          tableExists:
+            tableName: epaper
+      changes:
+        - createTable:
+            tableName: epaper
+            columns:
+              - column:
+                  name: id
+                  type: BIGINT UNSIGNED
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: newspaper_name
+                  type: VARCHAR(255)
+              - column:
+                  name: width
+                  type: BIGINT
+              - column:
+                  name: height
+                  type: BIGINT
+              - column:
+                  name: dpi
+                  type: BIGINT
+              - column:
+                  name: uploaded_at
+                  type: DATETIME
+              - column:
+                  name: file_name
+                  type: VARCHAR(255)
