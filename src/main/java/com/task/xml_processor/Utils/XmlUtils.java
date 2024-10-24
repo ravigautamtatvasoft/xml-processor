@@ -49,7 +49,7 @@ public class XmlUtils {
                 InputStream xmlInputStream = xml.getInputStream();
                 validator.validate(new StreamSource(xmlInputStream));
             } catch (IOException | SAXException e) {
-                LOGGER.error("XML is not valid", e);
+                LOGGER.error("XML is not valid or newspaperName is empty", e);
                 return false;
             }
         }

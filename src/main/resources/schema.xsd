@@ -29,7 +29,13 @@
               <xs:element name="appInfo">
                 <xs:complexType>
                   <xs:sequence>
-                    <xs:element type="xs:string" name="newspaperName"/>
+                    <xs:element name="newspaperName">
+                      <xs:simpleType>
+                        <xs:restriction base="xs:string">
+                          <xs:pattern value=".*\S.*"/>
+                        </xs:restriction>
+                      </xs:simpleType>
+                    </xs:element>
                     <xs:element type="xs:float" name="version"/>
                   </xs:sequence>
                 </xs:complexType>

@@ -18,6 +18,8 @@ cd xml-processor
 ```sh
  docker-compose -f docker-compose.yaml up -d --build
 ```
+Note: In case ''**docker-compose**'' not supported,  ''**docker compose**'' cane be used.
+
 ## API Endpoints
 - POST API: http://localhost:8080/api/processXml
     - in form-data add key "xmlFile" change type to file and attach the file.
