@@ -10,14 +10,21 @@ public class GlobalExceptionHandler {
     @ExceptionHandler({InvalidXMLException.class})
     public ResponseEntity<Object> invalidXMLException(InvalidXMLException exception) {
         return ResponseEntity
-                .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                .status(HttpStatus.BAD_REQUEST)
                 .body(exception.getMessage());
     }
 
     @ExceptionHandler({InvalidFileFormatException.class})
     public ResponseEntity<Object> invalidFileFormatException(InvalidFileFormatException exception) {
         return ResponseEntity
-                .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                .status(HttpStatus.BAD_REQUEST)
                 .body(exception.getMessage());
+    }
+
+    @ExceptionHandler({Exception.class})
+    public ResponseEntity<Object> handleException(Exception exception) {
+        return ResponseEntity
+                .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                .body("Something wrong occurred");
     }
 }
