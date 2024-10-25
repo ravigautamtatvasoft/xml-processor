@@ -5,6 +5,8 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.CreationTimestamp;
+
 import java.io.Serializable;
 import java.util.Date;
 
@@ -28,7 +30,7 @@ public class Epaper implements Serializable {
     private Long height;
     private Long dpi;
     @Column(name = "uploaded_at")
-    @Temporal(TemporalType.TIMESTAMP)
+    @CreationTimestamp
     private Date uploadedAt;
     @Column(name = "file_name")
     private String filename;

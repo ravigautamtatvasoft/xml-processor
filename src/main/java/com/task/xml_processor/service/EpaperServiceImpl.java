@@ -118,7 +118,8 @@ public class EpaperServiceImpl implements EpaperService{
                 .newspaperName(epaperRequestDTO.getDeviceInfo().getAppInfo().getNewspaperName())
                 .height(epaperRequestDTO.getDeviceInfo().getScreenInfo().getHeight())
                 .width(epaperRequestDTO.getDeviceInfo().getScreenInfo().getWidth())
-                .dpi(epaperRequestDTO.getDeviceInfo().getScreenInfo().getDpi()).uploadedAt(new Date()).build();
+                .dpi(epaperRequestDTO.getDeviceInfo().getScreenInfo().getDpi())
+                .build();
         return epaper;
     }
 
