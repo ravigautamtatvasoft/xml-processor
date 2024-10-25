@@ -1,5 +1,7 @@
 package com.task.xml_processor.service;
 
+import com.task.xml_processor.exception.InvalidFileFormatException;
+import com.task.xml_processor.exception.InvalidXMLException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.xml.bind.JAXBException;
 import org.springframework.http.ResponseEntity;
@@ -20,5 +22,5 @@ public interface EpaperService {
 
     ResponseEntity<?> getAllEpaperList(HttpServletRequest request, String search, String sortBy, Boolean order, Long fromDate, Long toDate, Integer pageNumber, Integer pageSize) throws Exception;
 
-    ResponseEntity<?> processXml(HttpServletRequest request, MultipartFile xmlFile) throws IOException, SAXException, JAXBException;
+    ResponseEntity<?> processXml(HttpServletRequest request, MultipartFile xmlFile) throws IOException, SAXException, JAXBException, InvalidXMLException, InvalidFileFormatException;
 }

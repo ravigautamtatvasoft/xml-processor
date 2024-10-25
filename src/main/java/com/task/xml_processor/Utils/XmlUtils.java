@@ -1,9 +1,12 @@
 package com.task.xml_processor.Utils;
 
 import com.task.xml_processor.dto.EpaperRequestDto;
+import com.task.xml_processor.exception.InvalidFileFormatException;
+import com.task.xml_processor.exception.InvalidXMLException;
 import jakarta.xml.bind.JAXBContext;
 import jakarta.xml.bind.JAXBException;
 import jakarta.xml.bind.Unmarshaller;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
@@ -38,8 +41,8 @@ public class XmlUtils {
      * @return boolean
      * @throws SAXException
      */
-    public boolean validateXml(MultipartFile xml) throws SAXException {
-        if (xml.getContentType().contains("text/xml") || xml.getContentType().contains("application/xml")) {
+    public boolean validateXml(MultipartFile xml) throws SAXException, InvalidXMLException, InvalidFileFormatException {
+        if (StringUtils.isNotEmpty(xml.getContentType()) && (xml.getContentType().contains("text/xml") || xml.getContentType().contains("application/xml"))) {
             SchemaFactory factory = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
 
             Source schemaFile = new StreamSource(getFileAsStream("schema.xsd"));
@@ -50,11 +53,13 @@ public class XmlUtils {
                 validator.validate(new StreamSource(xmlInputStream));
             } catch (IOException | SAXException e) {
                 LOGGER.error("XML is not valid or newspaperName is empty", e);
-                return false;
+                throw new InvalidXMLException("Error: XML is not valid");
             }
+            LOGGER.info("XML validation passed");
+            return true;
         }
-        LOGGER.info("XML validation passed");
-        return true;
+        LOGGER.error("File is not attached or not XML");
+        throw new InvalidFileFormatException("Error: File is not attached or not XML");
     }
 
     /** This util method parse the data to EpaperRequestDTO

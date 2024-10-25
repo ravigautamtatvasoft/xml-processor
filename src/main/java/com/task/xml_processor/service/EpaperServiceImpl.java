@@ -4,6 +4,8 @@ import com.task.xml_processor.Utils.XmlUtils;
 import com.task.xml_processor.dto.EpaperDto;
 import com.task.xml_processor.dto.EpaperRequestDto;
 import com.task.xml_processor.entity.Epaper;
+import com.task.xml_processor.exception.InvalidFileFormatException;
+import com.task.xml_processor.exception.InvalidXMLException;
 import com.task.xml_processor.repository.EpaperRepository;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.xml.bind.JAXBException;
@@ -84,7 +86,7 @@ public class EpaperServiceImpl implements EpaperService{
      * @throws JAXBException
      */
     @Override
-    public ResponseEntity<?> processXml(HttpServletRequest request, MultipartFile xmlFile) throws IOException, SAXException, JAXBException {
+    public ResponseEntity<?> processXml(HttpServletRequest request, MultipartFile xmlFile) throws IOException, SAXException, JAXBException, InvalidXMLException, InvalidFileFormatException {
         LOGGER.info("XML Processing Start");
         Boolean validateXML = xmlUtils.validateXml(xmlFile);
         if(validateXML){

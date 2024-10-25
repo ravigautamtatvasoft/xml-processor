@@ -38,7 +38,7 @@ public class EpaperRequestController {
     */
     @PostMapping("/processXml")
     public ResponseEntity<?> processPaper(HttpServletRequest request, @RequestParam MultipartFile xmlFile)
-            throws IOException, SAXException, JAXBException {
+            throws Exception {
         return epaperService.processXml(request, xmlFile);
     }
 
