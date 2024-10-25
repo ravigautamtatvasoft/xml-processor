@@ -64,9 +64,9 @@ public class EpaperServiceImpl implements EpaperService{
     public ResponseEntity<?> getAllEpaperList(HttpServletRequest request, String search, String sortBy, Boolean order, Long fromDate, Long toDate, Integer pageNumber, Integer pageSize) throws Exception {
 
         LOGGER.info("getAllEpaperList");
-        Pageable page = PageRequest.of(pageNumber == null ? 0 : pageNumber,
-                pageSize == null ? (Integer.MAX_VALUE - 1) : pageSize == Integer.MAX_VALUE ? (pageSize - 1) : pageSize,
-                Sort.by(order == null || order ? Sort.Direction.ASC : Sort.Direction.DESC, sortBy == null ? "id" : sortBy));
+        Pageable page = PageRequest.of(pageNumber,
+                pageSize == Integer.MAX_VALUE ? (pageSize - 1) : pageSize,
+                Sort.by(order ? Sort.Direction.ASC : Sort.Direction.DESC, validateField(sortBy) ? sortBy : "id"));
 
         Date dateFrom = fromDate == null ? new Date(0) : new Date(fromDate);
         Date dateTo = toDate == null ? new Date() : new Date(toDate);
@@ -120,5 +120,16 @@ public class EpaperServiceImpl implements EpaperService{
                 .width(epaperRequestDTO.getDeviceInfo().getScreenInfo().getWidth())
                 .dpi(epaperRequestDTO.getDeviceInfo().getScreenInfo().getDpi()).uploadedAt(new Date()).build();
         return epaper;
+    }
+
+    private Boolean validateField(String sortField) {
+        Field[] fields = Epaper.class.getDeclaredFields();
+
+        for (Field field : fields) {
+            if (field.getName().equalsIgnoreCase(sortField)) {
+                return true;
+            }
+        }
+        return false;
     }
 }
