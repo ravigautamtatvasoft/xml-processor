@@ -13,12 +13,12 @@ import lombok.NoArgsConstructor;
 @XmlSeeAlso(DeviceInfo.class)
 public class ScreenInfo {
 
-	@XmlAttribute
-	private Long width;
+    @XmlAttribute
+    private Long width;
 
-	@XmlAttribute
-	private Long height;
+    @XmlAttribute
+    private Long height;
 
-	@XmlAttribute
-	private Long dpi;
+    @XmlAttribute
+    private Long dpi;
 }

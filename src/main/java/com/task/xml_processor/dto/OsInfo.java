@@ -13,9 +13,9 @@ import lombok.NoArgsConstructor;
 @XmlSeeAlso(DeviceInfo.class)
 public class OsInfo {
 
-	@XmlAttribute
-	private String name;
+    @XmlAttribute
+    private String name;
 
-	@XmlAttribute
-	private Float version;
+    @XmlAttribute
+    private Float version;
 }

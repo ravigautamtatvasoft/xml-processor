@@ -13,18 +13,18 @@ import lombok.NoArgsConstructor;
 @XmlSeeAlso(EpaperRequestDto.class)
 public class DeviceInfo {
 
-	@XmlAttribute
-	private String name;
+    @XmlAttribute
+    private String name;
 
-	@XmlAttribute
-	private String id;
+    @XmlAttribute
+    private String id;
 
-	@XmlElementRef(name = "screenInfo")
-	private ScreenInfo screenInfo;
+    @XmlElementRef(name = "screenInfo")
+    private ScreenInfo screenInfo;
 
-	@XmlElementRef(name = "osInfo")
-	private OsInfo osInfo;
+    @XmlElementRef(name = "osInfo")
+    private OsInfo osInfo;
 
-	@XmlElementRef(name = "appInfo")
-	private AppInfo appInfo;
+    @XmlElementRef(name = "appInfo")
+    private AppInfo appInfo;
 }

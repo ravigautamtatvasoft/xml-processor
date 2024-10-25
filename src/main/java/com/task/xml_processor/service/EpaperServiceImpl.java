@@ -9,10 +9,10 @@ import com.task.xml_processor.exception.InvalidXMLException;
 import com.task.xml_processor.repository.EpaperRepository;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.xml.bind.JAXBException;
+import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -22,6 +22,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.xml.sax.SAXException;
 
 import java.io.IOException;
+import java.lang.reflect.Field;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -30,25 +31,25 @@ import java.util.stream.Collectors;
  * Epaper service implementation class.
  *
  * @author Ravi.Gautam
+ * @version 1.0
  * @see EpaperRepository
  * @see XmlUtils
  * @since 22-October-2024
- * @version 1.0
- *
  */
 
 @Service
-public class EpaperServiceImpl implements EpaperService{
+@RequiredArgsConstructor
+public class EpaperServiceImpl implements EpaperService {
     private Logger LOGGER = LoggerFactory.getLogger(EpaperServiceImpl.class);
 
-    @Autowired
-    private EpaperRepository epaperRepository;
+    private final EpaperRepository epaperRepository;
 
-    @Autowired
-    private XmlUtils xmlUtils;
+    private final XmlUtils xmlUtils;
 
 
-    /** This Service method is used to get the data by applying filters
+    /**
+     * This Service method is used to get the data by applying filters
+     *
      * @param request
      * @param fromDate
      * @param toDate
@@ -71,13 +72,15 @@ public class EpaperServiceImpl implements EpaperService{
         Date dateFrom = fromDate == null ? new Date(0) : new Date(fromDate);
         Date dateTo = toDate == null ? new Date() : new Date(toDate);
 
-        LOGGER.info("search: "+search+" fromDate timestamp: "+dateFrom+" toDate timestamp: "+toDate);
+        LOGGER.info("search: " + search + " fromDate timestamp: " + dateFrom + " toDate timestamp: " + toDate);
 
         List<Epaper> epapers = epaperRepository.getAllEpaperList(search, dateFrom, dateTo, page);
         return ResponseEntity.ok(epapers.stream().map(this::toDTO).collect(Collectors.toList()));
     }
 
-    /** This service method  is used to validate the xml and process to save the XML data.
+    /**
+     * This service method  is used to validate the xml and process to save the XML data.
+     *
      * @param request
      * @param xmlFile
      * @return ResponseEntity
@@ -89,7 +92,7 @@ public class EpaperServiceImpl implements EpaperService{
     public ResponseEntity<?> processXml(HttpServletRequest request, MultipartFile xmlFile) throws IOException, SAXException, JAXBException, InvalidXMLException, InvalidFileFormatException {
         LOGGER.info("XML Processing Start");
         Boolean validateXML = xmlUtils.validateXml(xmlFile);
-        if(validateXML){
+        if (validateXML) {
             EpaperRequestDto epaperRequestDto = xmlUtils.parseXMLDocument(xmlFile.getInputStream());
             Epaper epaper = toEntity(xmlFile.getOriginalFilename(), epaperRequestDto);
             epaper = epaperRepository.save(epaper);
@@ -98,7 +101,9 @@ public class EpaperServiceImpl implements EpaperService{
         return ResponseEntity.badRequest().body("Invalid File");
     }
 
-    /** It converts the epaper to EpaperDto
+    /**
+     * It converts the epaper to EpaperDto
+     *
      * @param epaper
      * @return EpaperDto
      */
@@ -108,7 +113,9 @@ public class EpaperServiceImpl implements EpaperService{
         return EpaperDto;
     }
 
-    /** It converts the EpaperRequestDTO to Epaper
+    /**
+     * It converts the EpaperRequestDTO to Epaper
+     *
      * @param filename
      * @param epaperRequestDTO
      * @return Epaper

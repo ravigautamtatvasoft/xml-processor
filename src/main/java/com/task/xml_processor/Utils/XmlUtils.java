@@ -26,9 +26,8 @@ import java.io.InputStream;
  * XML Utils class for validating and parsing XML.
  *
  * @author Ravi.Gautam
- * @since 22-Oct-2024
  * @version 1.0
- *
+ * @since 22-Oct-2024
  */
 
 @Component
@@ -36,7 +35,9 @@ public class XmlUtils {
 
     private Logger LOGGER = LoggerFactory.getLogger(XmlUtils.class);
 
-    /** This util method validate the XML
+    /**
+     * This util method validate the XML
+     *
      * @param xml
      * @return boolean
      * @throws SAXException
@@ -44,7 +45,6 @@ public class XmlUtils {
     public boolean validateXml(MultipartFile xml) throws SAXException, InvalidXMLException, InvalidFileFormatException {
         if (StringUtils.isNotEmpty(xml.getContentType()) && (xml.getContentType().contains("text/xml") || xml.getContentType().contains("application/xml"))) {
             SchemaFactory factory = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
-
             Source schemaFile = new StreamSource(getFileAsStream("schema.xsd"));
             Schema schema = factory.newSchema(schemaFile);
             Validator validator = schema.newValidator();
@@ -62,7 +62,9 @@ public class XmlUtils {
         throw new InvalidFileFormatException("Error: File is not attached or not XML");
     }
 
-    /** This util method parse the data to EpaperRequestDTO
+    /**
+     * This util method parse the data to EpaperRequestDTO
+     *
      * @param xmlInputStream
      * @return boolean
      * @throws JAXBException
@@ -75,7 +77,9 @@ public class XmlUtils {
         return epaperRequestDto;
     }
 
-    /** This util method get the file as InputStream.
+    /**
+     * This util method get the file as InputStream.
+     *
      * @param fileName
      * @return InputStream
      */

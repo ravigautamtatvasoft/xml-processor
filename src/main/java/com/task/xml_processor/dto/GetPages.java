@@ -15,9 +15,9 @@ import java.util.Date;
 @XmlSeeAlso(EpaperRequestDto.class)
 public class GetPages {
 
-	@XmlAttribute
-	private Long editionDefId;
+    @XmlAttribute
+    private Long editionDefId;
 
-	@XmlAttribute
-	private Date publicationDate;
+    @XmlAttribute
+    private Date publicationDate;
 }

@@ -13,9 +13,9 @@ import lombok.NoArgsConstructor;
 @XmlType(name = "epaperRequest")
 public class EpaperRequestDto {
 
-	@XmlElementRef(name = "deviceInfo")
-	private DeviceInfo deviceInfo;
+    @XmlElementRef(name = "deviceInfo")
+    private DeviceInfo deviceInfo;
 
-	@XmlElementRef(name = "getPages")
-	private GetPages getPages;
+    @XmlElementRef(name = "getPages")
+    private GetPages getPages;
 }

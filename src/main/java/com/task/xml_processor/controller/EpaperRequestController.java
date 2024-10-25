@@ -3,7 +3,7 @@ package com.task.xml_processor.controller;
 import com.task.xml_processor.service.EpaperService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.xml.bind.JAXBException;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -15,34 +15,37 @@ import java.io.IOException;
  * EpaperRequestController
  *
  * @author Ravi.Gautam
+ * @version 1.0
  * @see EpaperService
  * @since 22-October-2024
- * @version 1.0
- *
  */
 
 @RestController
 @RequestMapping("/api")
+@RequiredArgsConstructor
 public class EpaperRequestController {
 
-    @Autowired
-    private EpaperService epaperService;
+    private final EpaperService epaperService;
 
-    /** API used to upload and save the XML data.
+    /**
+     * API used to upload and save the XML data.
+     *
      * @param request
      * @param xmlFile
      * @return ResponseEntity
      * @throws IOException
      * @throws SAXException
      * @throws JAXBException
-    */
+     */
     @PostMapping("/processXml")
     public ResponseEntity<?> processPaper(HttpServletRequest request, @RequestParam MultipartFile xmlFile)
             throws Exception {
         return epaperService.processXml(request, xmlFile);
     }
 
-    /** API used to upload and save the XML data.
+    /**
+     * API used to upload and save the XML data.
+     *
      * @param request
      * @param fromDate
      * @param toDate

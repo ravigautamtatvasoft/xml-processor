@@ -13,9 +13,9 @@ import lombok.NoArgsConstructor;
 @XmlSeeAlso(DeviceInfo.class)
 public class AppInfo {
 
-	@XmlElement
-	private String newspaperName;
+    @XmlElement
+    private String newspaperName;
 
-	@XmlElement
-	private Float version;
+    @XmlElement
+    private Float version;
 }
