@@ -42,7 +42,7 @@ public class XmlUtils {
      * @return boolean
      * @throws SAXException
      */
-    public boolean validateXml(MultipartFile xml) throws SAXException, InvalidXMLException, InvalidFileFormatException {
+    public Boolean validateXml(MultipartFile xml) throws SAXException, InvalidXMLException, InvalidFileFormatException {
         if (StringUtils.isNotEmpty(xml.getContentType()) && (xml.getContentType().contains("text/xml") || xml.getContentType().contains("application/xml"))) {
             SchemaFactory factory = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
             Source schemaFile = new StreamSource(getFileAsStream("schema.xsd"));
@@ -56,7 +56,7 @@ public class XmlUtils {
                 throw new InvalidXMLException("Error: XML is not valid");
             }
             LOGGER.info("XML validation passed");
-            return true;
+            return Boolean.TRUE;
         }
         LOGGER.error("File is not attached or not XML");
         throw new InvalidFileFormatException("Error: File is not attached or not XML");

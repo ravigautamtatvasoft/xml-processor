@@ -9,9 +9,9 @@
                 <xs:complexType>
                   <xs:simpleContent>
                     <xs:extension base="xs:string">
-                      <xs:attribute type="xs:short" name="width" use="required"/>
-                      <xs:attribute type="xs:short" name="height" use="required"/>
-                      <xs:attribute type="xs:short" name="dpi" use="required"/>
+                      <xs:attribute type="xs:unsignedShort" name="width" use="required"/>
+                      <xs:attribute type="xs:unsignedShort" name="height" use="required"/>
+                      <xs:attribute type="xs:unsignedShort" name="dpi" use="required"/>
                     </xs:extension>
                   </xs:simpleContent>
                 </xs:complexType>

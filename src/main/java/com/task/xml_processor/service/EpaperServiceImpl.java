@@ -40,7 +40,7 @@ import java.util.stream.Collectors;
 @Service
 @RequiredArgsConstructor
 public class EpaperServiceImpl implements EpaperService {
-    private Logger LOGGER = LoggerFactory.getLogger(EpaperServiceImpl.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(EpaperServiceImpl.class);
 
     private final EpaperRepository epaperRepository;
 
@@ -92,7 +92,7 @@ public class EpaperServiceImpl implements EpaperService {
     public ResponseEntity<?> processXml(HttpServletRequest request, MultipartFile xmlFile) throws IOException, SAXException, JAXBException, InvalidXMLException, InvalidFileFormatException {
         LOGGER.info("XML Processing Start");
         Boolean validateXML = xmlUtils.validateXml(xmlFile);
-        if (validateXML) {
+        if (Boolean.TRUE.equals(validateXML)) {
             EpaperRequestDto epaperRequestDto = xmlUtils.parseXMLDocument(xmlFile.getInputStream());
             Epaper epaper = toEntity(xmlFile.getOriginalFilename(), epaperRequestDto);
             epaper = epaperRepository.save(epaper);
@@ -108,9 +108,9 @@ public class EpaperServiceImpl implements EpaperService {
      * @return EpaperDto
      */
     private EpaperDto toDTO(Epaper epaper) {
-        EpaperDto EpaperDto = new EpaperDto();
-        BeanUtils.copyProperties(epaper, EpaperDto);
-        return EpaperDto;
+        EpaperDto epaperDto = new EpaperDto();
+        BeanUtils.copyProperties(epaper, epaperDto);
+        return epaperDto;
     }
 
     /**
@@ -121,13 +121,12 @@ public class EpaperServiceImpl implements EpaperService {
      * @return Epaper
      */
     private Epaper toEntity(String filename, EpaperRequestDto epaperRequestDTO) {
-        Epaper epaper = Epaper.builder().id(null).filename(filename)
+        return Epaper.builder().id(null).filename(filename)
                 .newspaperName(epaperRequestDTO.getDeviceInfo().getAppInfo().getNewspaperName())
                 .height(epaperRequestDTO.getDeviceInfo().getScreenInfo().getHeight())
                 .width(epaperRequestDTO.getDeviceInfo().getScreenInfo().getWidth())
                 .dpi(epaperRequestDTO.getDeviceInfo().getScreenInfo().getDpi())
                 .build();
-        return epaper;
     }
 
     private Boolean validateField(String sortField) {
