@@ -1,14 +1,14 @@
 package com.task.xml_processor;
 
 import com.task.xml_processor.controller.EpaperRequestController;
+import com.task.xml_processor.exception.GlobalExceptionHandler;
+import com.task.xml_processor.exception.InvalidXMLException;
 import com.task.xml_processor.service.EpaperService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -18,12 +18,12 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import java.nio.file.Files;
 import java.nio.file.Path;
+
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.multipart;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@ExtendWith(MockitoExtension.class)
 public class EpaperRequestControllerTest {
     private MockMvc mockMvc;
 
@@ -36,7 +36,8 @@ public class EpaperRequestControllerTest {
     @BeforeEach
     void setUp() {
         MockitoAnnotations.openMocks(this);
-        mockMvc = MockMvcBuilders.standaloneSetup(epaperController).build();
+        mockMvc = MockMvcBuilders.standaloneSetup(epaperController)
+                .setControllerAdvice(new GlobalExceptionHandler()).build();
     }
 
     @Test
@@ -63,7 +64,7 @@ public class EpaperRequestControllerTest {
         MockMultipartFile mockFile = new MockMultipartFile("xmlFile", "incorrect-epaper-request.xml",
                 MediaType.APPLICATION_XML_VALUE, xmlContent.getBytes());
 
-        when(epaperService.processXml(any(), any())).thenReturn(ResponseEntity.badRequest().build());
+        when(epaperService.processXml(any(), any())).thenThrow(new InvalidXMLException("Error: XML is not valid"));
 
         mockMvc.perform(multipart("/api/processXml")
                         .file(mockFile))
