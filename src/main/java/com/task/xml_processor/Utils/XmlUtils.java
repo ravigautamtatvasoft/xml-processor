@@ -33,7 +33,7 @@ import java.io.InputStream;
 @Component
 public class XmlUtils {
 
-    private Logger LOGGER = LoggerFactory.getLogger(XmlUtils.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(XmlUtils.class);
 
     /**
      * This util method validate the XML
